@@ -1,0 +1,63 @@
+/* Responsive design queries and stacked behavior adjustments - Soft Premium Theme */
+
+@media (max-width: 1024px) {
+  .builder-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+  
+  .right-column {
+    position: relative;
+    top: 0;
+    order: -1; /* Display preview above controls on tablet/mobile for instant visual feedback */
+  }
+  
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  
+  .preview-container, .preview-title-bar, .preview-info {
+    max-width: 100%;
+  }
+  
+  .linkedin-card-small {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.25rem;
+  }
+  
+  .linkedin-follow-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero-section {
+    padding: 1.5rem 0.5rem 2rem 0.5rem;
+  }
+  
+  .hero-title {
+    font-size: 2rem;
+  }
+  
+  .card, .linkedin-card-small {
+    padding: 1.5rem;
+  }
+  
+  header {
+    padding: 1rem 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 1.65rem;
+  }
+  
+  .dropzone {
+    padding: 1.5rem 1rem;
+  }
+}

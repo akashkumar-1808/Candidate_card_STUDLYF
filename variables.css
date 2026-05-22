@@ -1,0 +1,38 @@
+:root {
+  /* Colors */
+  --bg-gradient: linear-gradient(135deg, #fff5f7 0%, #fcf0f7 40%, #f3e8ff 100%);
+  --bg-card: rgba(255, 255, 255, 0.75);
+  --bg-card-hover: rgba(255, 255, 255, 0.85);
+  --bg-input: #ffffff;
+  
+  --brand-purple: #7c3aed;
+  --brand-purple-light: #a78bfa;
+  --brand-pink: #ec4899;
+  --brand-pink-light: #fbcfe8;
+  
+  /* Gradients */
+  --accent-gradient: linear-gradient(135deg, var(--brand-pink) 0%, var(--brand-purple) 100%);
+  --accent-gradient-hover: linear-gradient(135deg, #f43f5e 0%, #6d28d9 100%);
+  --badge-gradient: linear-gradient(135deg, rgba(236, 72, 153, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+  
+  /* Typography */
+  --text-main: #0b1329;       /* Deep navy headings */
+  --text-secondary: #334155;  /* Slate secondary */
+  --text-muted: #64748b;      /* Muted gray-purple */
+  
+  /* Borders & Shadows */
+  --border-color: rgba(236, 72, 153, 0.15);
+  --border-color-hover: rgba(124, 58, 237, 0.3);
+  --border-radius-outer: 32px;
+  --border-radius-inner: 20px;
+  --border-radius-input: 14px;
+  
+  /* Soft Layered Shadows */
+  --shadow-sm: 0 2px 12px rgba(236, 72, 153, 0.04);
+  --shadow-md: 0 12px 36px rgba(124, 58, 237, 0.06);
+  --shadow-lg: 0 22px 60px rgba(124, 58, 237, 0.08);
+  --shadow-inset: inset 0 2px 4px rgba(0, 0, 0, 0.01);
+  
+  /* Transitions */
+  --transition-smooth: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
