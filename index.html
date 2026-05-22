@@ -234,10 +234,10 @@
 
   <!-- Load unified scripts -->
   <script src="script.js"></script>
+  <script type="module">
+    import { inject } from '/node_modules/@vercel/analytics/dist/index.mjs';
+    inject();
+  </script>
 </body>
 
 </html>
-<script type="module">
-  import { inject } from '/node_modules/@vercel/analytics/dist/index.mjs';
-  inject();
-</script>
