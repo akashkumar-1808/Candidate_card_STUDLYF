@@ -418,7 +418,7 @@ textarea {
 .preview-container {
   width: 100%;
   max-width: 480px;
-  aspect-ratio: 1;
+  aspect-ratio: 3 / 4;
   position: relative;
   background: var(--bg-card);
   border: 1px solid var(--border-color);

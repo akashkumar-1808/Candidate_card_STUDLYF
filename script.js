@@ -1,54 +1,58 @@
 // Fixed Composition Config based on precise template coordinate calibration
+// New poster: Venture Capital Hackathon (1086x1448 original, 3:4 ratio)
+// Circle measured from 4 circumference points: Top(539,666) Left(371,843) Bottom(541,1009) Right(715,855)
+// Calculated center: (543, 838), radius: 172 in original coords
+// Scale to 1080-wide: factor = 1080/1086 = 0.9945
 const POSTER_DIMENSIONS = {
   canvasWidth: 1080,
-  canvasHeight: 1080,
+  canvasHeight: 1440,
 
   // Custom template coordinates (Assets folder default-poster.png)
   custom: {
     portrait: {
-      cx: 815,
-      cy: 298,
-      r: 179
-    },
-    name: {
-      x: 801,
-      y: 534,
-      maxWidth: 270,
-      fontSize: 28,
-      color: '#0b1329' // Deep navy
-    },
-    college: {
-      x: 801,
-      y: 575,
-      maxWidth: 270,
-      fontSize: 18,
-      color: '#4c1d95' // Rich dark purple
-    },
-    bottomTextMask: {
-      x: 640,
-      y: 611,
-      w: 320,
-      h: 112
-    }
-  },
-
-  // Fallback programmatic layout coordinates
-  fallback: {
-    portrait: {
       cx: 540,
-      cy: 380,
-      r: 160
+      cy: 833,
+      r: 171
     },
     name: {
       x: 540,
-      y: 680,
+      y: 1055,
+      maxWidth: 300,
+      fontSize: 30,
+      color: '#0b1329' // Deep navy
+    },
+    college: {
+      x: 540,
+      y: 1095,
+      maxWidth: 300,
+      fontSize: 20,
+      color: '#4c1d95' // Rich dark purple
+    },
+    bottomTextMask: {
+      x: 380,
+      y: 1030,
+      w: 320,
+      h: 90
+    }
+  },
+
+  // Fallback programmatic layout coordinates (for 1080x1440 canvas)
+  fallback: {
+    portrait: {
+      cx: 540,
+      cy: 550,
+      r: 180
+    },
+    name: {
+      x: 540,
+      y: 880,
       maxWidth: 800,
       fontSize: 54,
       color: '#0b1329'
     },
     college: {
       x: 540,
-      y: 750,
+      y: 950,
       maxWidth: 760,
       fontSize: 32,
       color: '#7c3aed'
@@ -138,7 +142,7 @@ function generateDefaultTemplate() {
   img.onload = () => {
     state.templateImage = img;
     state.isUsingCustomTemplate = true;
-    state.renderOrder = 'photo-above'; // Draw photo above the template circular frame
+    state.renderOrder = 'photo-above'; // Draw circular-clipped photo on top of the template
     requestRender();
   };
   img.onerror = () => {
@@ -146,44 +150,46 @@ function generateDefaultTemplate() {
     state.isUsingCustomTemplate = false;
     state.renderOrder = 'photo-below';
     const offscreen = document.createElement('canvas');
-    offscreen.width = 1080;
-    offscreen.height = 1080;
+    offscreen.width = POSTER_DIMENSIONS.canvasWidth;
+    offscreen.height = POSTER_DIMENSIONS.canvasHeight;
     const oCtx = offscreen.getContext('2d');
 
     // 1. Soft blush light gradient on the canvas
-    const grad = oCtx.createLinearGradient(0, 0, 1080, 1080);
+    const cW = POSTER_DIMENSIONS.canvasWidth;
+    const cH = POSTER_DIMENSIONS.canvasHeight;
+    const grad = oCtx.createLinearGradient(0, 0, cW, cH);
     grad.addColorStop(0, '#fffcfd');
     grad.addColorStop(0.5, '#fdf6fb');
     grad.addColorStop(1, '#f5ebff');
     oCtx.fillStyle = grad;
-    oCtx.fillRect(0, 0, 1080, 1080);
+    oCtx.fillRect(0, 0, cW, cH);
 
     // Soft design circles
     oCtx.fillStyle = 'rgba(236, 72, 153, 0.03)';
     oCtx.beginPath();
-    oCtx.arc(1080, 0, 450, 0, Math.PI * 2);
+    oCtx.arc(cW, 0, 450, 0, Math.PI * 2);
     oCtx.fill();
 
     oCtx.fillStyle = 'rgba(124, 58, 237, 0.03)';
     oCtx.beginPath();
-    oCtx.arc(0, 1080, 500, 0, Math.PI * 2);
+    oCtx.arc(0, cH, 500, 0, Math.PI * 2);
     oCtx.fill();
 
     // Subtle clean grid pattern
     oCtx.strokeStyle = 'rgba(124, 58, 237, 0.03)';
     oCtx.lineWidth = 1;
     const gridSize = 45;
-    for (let x = 0; x < 1080; x += gridSize) {
-      oCtx.beginPath(); oCtx.moveTo(x, 0); oCtx.lineTo(x, 1080); oCtx.stroke();
+    for (let x = 0; x < cW; x += gridSize) {
+      oCtx.beginPath(); oCtx.moveTo(x, 0); oCtx.lineTo(x, cH); oCtx.stroke();
     }
-    for (let y = 0; y < 1080; y += gridSize) {
-      oCtx.beginPath(); oCtx.moveTo(0, y); oCtx.lineTo(1080, y); oCtx.stroke();
+    for (let y = 0; y < cH; y += gridSize) {
+      oCtx.beginPath(); oCtx.moveTo(0, y); oCtx.lineTo(cW, y); oCtx.stroke();
     }
 
     // 2. Inner border
     oCtx.strokeStyle = 'rgba(236, 72, 153, 0.15)';
     oCtx.lineWidth = 4;
-    oCtx.strokeRect(40, 40, 1000, 1000);
+    oCtx.strokeRect(40, 40, cW - 80, cH - 80);
 
     // 3. Profile Image Area (centered, top-heavy)
     const px = state.photoX, py = state.photoY, pw = state.photoW, ph = state.photoH;
@@ -380,60 +386,13 @@ function renderCanvasFrame() {
     ctx.restore();
   }
 
-  // Draw COLLEGE NAME dynamically
-  if (state.studentCollege) {
-    ctx.save();
-
-    if (state.isUsingCustomTemplate) {
-      ctx.fillStyle = cfg.college.color;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
-      let currentFontSize = cfg.college.fontSize;
-      ctx.font = `bold ${currentFontSize}px "Outfit", sans-serif`;
-      ctx.letterSpacing = '1px';
-
-      const textVal = state.studentCollege.toUpperCase();
-      const maxTextWidth = cfg.college.maxWidth;
-      let textMetrics = ctx.measureText(textVal);
-
-      while (textMetrics.width > maxTextWidth && currentFontSize > 9) {
-        currentFontSize -= 0.5;
-        ctx.font = `bold ${currentFontSize}px "Outfit", sans-serif`;
-        textMetrics = ctx.measureText(textVal);
-      }
-
-      ctx.fillText(textVal, cfg.college.x, cfg.college.y);
-    } else {
-      // Programmatic Center-aligned College
-      ctx.fillStyle = cfg.college.color;
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-
-      let currentFontSize = cfg.college.fontSize;
-      ctx.font = `bold ${currentFontSize}px "Outfit", sans-serif`;
-      ctx.letterSpacing = '3px';
-
-      const textVal = state.studentCollege.toUpperCase();
-      const maxTextWidth = cfg.college.maxWidth;
-      let textMetrics = ctx.measureText(textVal);
-
-      while (textMetrics.width > maxTextWidth && currentFontSize > 14) {
-        currentFontSize -= 1.5;
-        ctx.font = `bold ${currentFontSize}px "Outfit", sans-serif`;
-        textMetrics = ctx.measureText(textVal);
-      }
-
-      ctx.fillText(textVal, cfg.college.x, cfg.college.y);
-    }
-    ctx.restore();
-  }
+  // College name rendering removed per user request
 }
 
 // Dynamic state binders & listeners
 function updateStateFromInputs() {
   state.studentName = elements.studentName.value;
-  state.studentCollege = elements.studentCollege.value;
+  if (elements.studentCollege) state.studentCollege = elements.studentCollege.value;
   requestRender();
 }
 
@@ -554,11 +513,11 @@ if (copyLinkedinBtn && linkedinPostContent) {
     try {
       const textToCopy = linkedinPostContent.innerText || linkedinPostContent.textContent;
       await navigator.clipboard.writeText(textToCopy.trim());
-      
+
       const originalText = copyLinkedinBtn.innerText;
       copyLinkedinBtn.innerText = 'Copied! ✓';
       copyLinkedinBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)'; // Success green gradient
-      
+
       setTimeout(() => {
         copyLinkedinBtn.innerText = originalText;
         copyLinkedinBtn.style.background = ''; // Revert to original styling
@@ -573,7 +532,7 @@ if (copyLinkedinBtn && linkedinPostContent) {
         textarea.select();
         document.execCommand('copy');
         document.body.removeChild(textarea);
-        
+
         const originalText = copyLinkedinBtn.innerText;
         copyLinkedinBtn.innerText = 'Copied! ✓';
         copyLinkedinBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
