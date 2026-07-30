@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>STUDLYF - Premium Ecosystem Identity Card</title>
+  <title>STUDLYF - Venture Capital Hackathon Candidate Card</title>
   <!-- Modern Google Font -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,8 +28,8 @@
 
   <!-- Top Navigation Header -->
   <header>
-    <!-- Left Logo Area (Uploadable & Fallback SVG) -->
-    <div class="logo-area">
+    <!-- Left Logo Area -->
+    <div class="logo-area" style="display: flex; align-items: center; gap: 0.75rem;">
       <label for="logoUpload" class="logo-upload-label" title="Click to upload STUDLYF logo">
         <img id="logoImg" src="assets/logos/studlyf.png" alt="STUDLYF Logo" onerror="handleHeaderLogoError(this)">
         <div id="logoPlaceholder" class="logo-placeholder" style="display: none;">
@@ -51,12 +51,14 @@
         </div>
       </label>
       <input type="file" id="logoUpload" accept="image/*" style="display: none;">
+      <span style="width: 1.5px; height: 28px; background: rgba(124, 58, 237, 0.2); border-radius: 2px;"></span>
+      <img src="assets/logos/mlr.png" alt="Malla Reddy University Logo" style="height: 36px; object-fit: contain;">
     </div>
 
     <!-- Right elegant version badge -->
     <div class="engine-badge">
       <span class="badge-dot"></span>
-      <span class="badge-text">Ecosystem Passport</span>
+      <span class="badge-text">Hackathon Candidare card</span>
       <span class="badge-version">v2.2</span>
     </div>
   </header>
@@ -65,23 +67,26 @@
 
     <!-- A. Top Hero Area (Clean and Premium) -->
     <section class="hero-section">
-      <!-- Logo or logo placeholder -->
+      <!-- Logos -->
       <div class="hero-logo-container"
-        style="margin-bottom: 0.5rem; max-width: 160px; display: flex; align-items: center; justify-content: center;">
+        style="margin-bottom: 0.5rem; max-width: 320px; display: flex; align-items: center; justify-content: center; gap: 1rem;">
         <img id="heroLogoImg" src="assets/logos/studlyf.png" alt="STUDLYF Logo"
-          style="width: 100%; object-fit: contain;" onerror="this.style.display='none'">
+          style="height: 48px; object-fit: contain;" onerror="this.style.display='none'">
+        <span style="width: 2px; height: 36px; background: rgba(124, 58, 237, 0.15); border-radius: 2px;"></span>
+        <img src="assets/logos/mlr.png" alt="Malla Reddy University Logo"
+          style="height: 48px; object-fit: contain;">
       </div>
 
       <!-- Small STUDLYF pill -->
       <div class="hero-badge">
-        <span class="badge-text-hero">STUDLYF Community</span>
+        <span class="badge-text-hero">Venture Capital Hackathon</span>
       </div>
 
       <!-- Main heading -->
-      <h1 class="hero-title">Claim Your <span class="gradient-text">Ecosystem Identity</span></h1>
+      <h1 class="hero-title">Create Your <span class="gradient-text">Candidate Card</span></h1>
 
       <!-- Short and elegant subtext quote -->
-      <p class="hero-quote">Learn. Grow. Evolve. Together.</p>
+      <p class="hero-quote">Innovate Boldly. Pitch Fearlessly. Create Impact.</p>
     </section>
 
     <!-- B. Builder Section (2-Column Layout) -->
